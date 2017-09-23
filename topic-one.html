@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Topic 1</title>
+    <link href="main.css" rel="stylesheet">
+    <script src="main.js"></script>
+    <script>
+        function someFunction() {
+            debugger
+            var controller = {
+                ids: [],
+                values : [],
+                populateIds: function() {
+                    for (var i = 0; i < 5; i++) {
+                        controller.ids.push("Name" + i);
+                    }
+                },
+                getValues: function() {
+                    controller.ids.forEach( function(id) {
+                        if (document.getElementById(id).value.length > 0)
+                            controller.values.push(document.getElementById(id).value);
+                    });
+                },
+                addValuesToList: function() {
+                    var newLi = document.createElement("li");
+                    var newContent = document.createTextNode(controller.values.join(" "));
+                    newLi.appendChild(newContent);
+                    document.getElementById("list").appendChild(newLi);
+                }
+            };
+
+            controller.populateIds();
+            controller.getValues();
+            controller.addValuesToList();
+        }
+
+        function setUpPage() {
+            var newDiv = document.createElement("div");
+            var newH1 = document.createElement("h1");
+            var newContent = document.createTextNode("CS 261 - Work");
+
+            newH1.appendChild(newContent);
+            newDiv.appendChild(newH1);
+            newDiv.setAttribute("class", "header");
+
+            document.body.appendChild(newDiv);
+
+            newDiv = document.createElement("div");
+            newDiv.setAttribute("class", "card");
+            var ul = document.createElement("ul");
+            ul.setAttribute("style", "list-style: none;");
+            ul.setAttribute("id", "list");
+
+            for (var i = 0; i < 5; i++) {
+                var li = document.createElement("li");
+                var content = document.createTextNode("Input " + (i + 1) + ":");
+                var input = document.createElement("input");
+                input.setAttribute("type", "text");
+                input.setAttribute("id", "Name" + i);
+                li.appendChild(content);
+                li.appendChild(input);
+                ul.appendChild(li);
+            }
+
+            li = document.createElement("li");
+            var button = document.createElement("button");
+            content = document.createTextNode("Push Me!");
+            button.setAttribute("onclick", "someFunction()");
+            button.appendChild(content);
+            li.appendChild(button);
+            ul.appendChild(li);
+            newDiv.appendChild(ul);
+
+            document.body.appendChild(newDiv);
+        }
+    </script>
+</head>
+<body>
+
+    <script>
+        (function() {
+            setUpPage();
+        })();
+    </script>
+</body>
+</html>

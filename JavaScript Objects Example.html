@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript Objects Example</title>
+    <link href="main.css" rel="stylesheet">
+    <script src="main.js"></script>
+    <script>
+        function onLoad() {
+            /**
+             * This is an example of a JavaScript Object.
+             */
+            debugger
+            var object = {}; //empty object constructor
+            var car = { model:'Civic', // you can assign attributes for the object in the declaration
+                        make:'Honda',
+                        "color":'red'}; // you can have the key for the attribute as a string or not
+
+            var sentence = 'I have a ' + car.color + ' '  + car.make + ' ' + car.model;
+
+            // This is DOM manipulation; not needed to use Objects but allows us to do fancy stuff.
+            var p = document.createElement('p');
+            p.innerHTML(sentence);
+            document.getElementById('mainDiv').appendChild(p);
+        }
+
+        function changeObject() {
+            var car = { model:'Civic', // Same object
+                make:'Honda',
+                "color":'red',
+                getCarDescription: function() { //now we add a function
+                    return this.color + ' ' + this.make + ' ' + this.model;
+                }}; //call the function to make the magic happen
+            var newSentence = 'I have a ' + car.getCarDescription();
+
+            //more DOM
+            var p = document.createElement('p');
+            p.innerHTML = newSentence;
+            document.body.children[0].appendChild(p);
+        }
+    </script>
+</head>
+<body onload="onLoad()">
+    <div class="card" id="mainDiv">
+        <button onclick="changeObject()">Click Here</button>
+        <p>Example:</p>
+    </div>
+</body>
+</html>
