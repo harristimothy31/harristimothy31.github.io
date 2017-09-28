@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<!--suppress ALL -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CS 261 - DOM Example</title>
+    <link href="main.css" rel="stylesheet">
+    <script src="main.js"></script>
+    <script>
+        /**Document Object Model or DOM
+         * Through the DOM we can manipulate the HTML document with JS.
+         *
+         * NOTE!! The DOM will not be fully accessible until AFTER it
+         * has loaded.
+         *
+         *  We can easily get around this limitation by putting all of our JS
+         * inside a function that executes onload of the body.
+         */
+        var one = document.forms[0].q1; // This is an ERROR!
+
+        function manipulateDOM() {
+            /**
+             * Select elements
+             */
+            var one = document.getElementById("one");
+            console.log(one);
+
+            var two = document.getElementsByName("two");
+            console.log(two);
+
+            var three = document.getElementsByClassName("header");
+            console.log(three);
+
+            var four = document.forms[0].q1;
+            console.log(four);
+
+            var fourAgain = document.FORM.q1;
+            console.log(fourAgain);
+
+            /**
+             * Create elements
+             */
+            var newInput = document.createElement("input");
+            console.log(newInput);
+            debugger
+
+            /**
+             * Modify element attributes
+             */
+            var newerInput = document.createElement("input");
+            newerInput.setAttribute("name", "q8");
+            newerInput.setAttribute("type", "number");
+            console.log(newerInput);
+
+            /**
+             * Place elements
+             *
+             * Lets add a row to our table.
+             */
+
+            var td = document.createElement("td"); // make a new table cell
+            td.appendChild(newerInput);            // append our input to the contents of the cell.
+
+            var tr = document.createElement("tr"); // make a new table row
+            tr.setAttribute("id", "eight");        // Set the id of our new row.
+            tr.insertBefore(td, tr.firstChild);    // prepend our table cell to the contents of the row.
+
+            document.FORM.firstElementChild.appendChild(tr);   // append our new row to the table.
+        }
+    </script>
+</head>
+<body onload="manipulateDOM()">
+    <header class="header">
+        <h1>CS 261 - Work</h1>
+    </header>
+    <div class="card">
+        <form name="FORM">
+            <table>
+                <tr id="one">
+                    <td>What is your first name?</td>
+                    <td><label for="q1"></label><input type="text" name="q1" id="q1"/></td>
+                </tr>
+                <tr id="two">
+                    <td>What is your middle name?</td>
+                    <td><label for="q2"></label><input type="text" name="two" id="q2"/></td>
+                </tr>
+                <tr id="three">
+                    <td>What is your last name?</td>
+                    <td><label for="q3"></label><input type="text" name="two" id="q3"/></td>
+                </tr>
+                <tr id="four">
+                    <td>What is your mom's first name?</td>
+                    <td><label for="q4"></label><input type="text" name="q4" id="q4"/></td>
+                </tr>
+                <tr id="five">
+                    <td>What is your mom's last name?</td>
+                    <td><label for="q5"></label><input type="text" name="q5" id="q5"/></td>
+                </tr>
+                <tr id="six">
+                    <td>What is your dad's first name?</td>
+                    <td><label for="q6"></label><input type="text" name="q6" id="q6"/></td>
+                </tr>
+                <tr id="seven">
+                    <td>What is your dad's last name?</td>
+                    <td><label for="q7"></label><input type="text" name="q7" id="q7"/></td>
+                </tr>
+                <tr id="buttons">
+                    <td></td>
+                    <td><button onclick="someFunction()">Submit</button></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+</html>

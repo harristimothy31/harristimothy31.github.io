@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS3 Transitions and More</title>
+    <link href="main.css" rel="stylesheet">
+    <script src="main.js"></script>
+    <script>
+
+    </script>
+    <style>
+        .box {
+            border: 1px solid;
+            display: block;
+            width: 20px;
+            height: 20px;
+            background-color: #0000FF;
+            -webkit-transition: width 0.5s, height 0.5s, background-color 0.5s, -webkit-transform 2s;
+            transition: width 0.5s, height 0.5s, background-color 0.5s, transform 0.5s;
+        }
+
+        .box:hover {
+            background-color: #FFCCCC;
+            width: 200px;
+            height: 200px;
+            -webkit-transform: rotate(360deg);
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>CS 261 - Work</h1>
+    </div>
+    <div style="display:inline-block; width:60%;" class="card">
+        <div class="card box">Box</div>
+        <div class="card box">Box</div>
+        <div class="card box">Box</div>
+        <div class="card box">Box</div>
+        <div class="card box">Box</div>
+        <div class="card box">Box</div>
+    </div>
+</body>
+</html>

@@ -1,29 +1,31 @@
 body {
     margin: 0;
+    background-color: lightgray;
 }
-.header {
-    padding: 5px;
-    background-color: grey;
-    color: white;
-    box-shadow: 3px 3px 19px 0 #919191;
+
+header {
+    margin-top: 15px;
+    margin-right: 20%;
+    margin-left: 20%;
+    padding: 10px;
+    color: lightyellow;
+    background-color: lightblue;
+    box-shadow: 0 5px 10px -2px #A9B0B2;
+    border-radius: 2px;
+    text-align: center;
+    width: 60%;
+    font-family: 'PT Sans', sans-serif;
 }
+
 .card {
+    padding: 10px 10px 1500px 10px;
+    box-shadow: 0 5px 10px -2px #A9B0B2;
+    background-color: white;
+    width: 60%;
     margin: 15px 20% 15px 20%;
-    box-shadow: 3px 3px 19px 0 #919191;
-    padding: 15px;
 }
+
+
 h1 {
     margin: 0;
-}
-
-ul li {
-    padding: 5px;
-}
-
-table tr td:nth-child(2) {
-    text-align: center;
-}
-
-table tr td:nth-child(1) {
-    text-align: right;
 }
