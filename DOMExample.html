@@ -16,6 +16,8 @@
          *  We can easily get around this limitation by putting all of our JS
          * inside a function that executes onload of the body.
          */
+        console.log(document);
+
         var one = document.forms[0].q1; // This is an ERROR!
 
         function manipulateDOM() {
@@ -42,7 +44,6 @@
              */
             var newInput = document.createElement("input");
             console.log(newInput);
-            debugger
 
             /**
              * Modify element attributes
@@ -64,6 +65,8 @@
             var tr = document.createElement("tr"); // make a new table row
             tr.setAttribute("id", "eight");        // Set the id of our new row.
             tr.insertBefore(td, tr.firstChild);    // prepend our table cell to the contents of the row.
+
+            tr.innerHTML = "blah";
 
             document.FORM.firstElementChild.appendChild(tr);   // append our new row to the table.
         }
