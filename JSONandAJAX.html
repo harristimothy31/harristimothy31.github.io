@@ -1,0 +1,43 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CIT 261 - Work</title>
+    <link href="main.css" rel="stylesheet">
+    <script>
+        _ = (selector) => { return document.querySelector(selector); }
+
+        function pageStartup() {
+            var httpRequest = new XMLHttpRequest();
+            httpRequest.onreadystatechange = function() {
+                if (httpRequest.readyState === XMLHttpRequest.DONE) {
+                    if (httpRequest.status === 200) {
+                        var json = JSON.parse(httpRequest.responseText);
+                        var obj = json["General Conference Years"];
+
+                        Object.keys(obj).forEach(function(key) {
+                            console.log(key, obj[key]);
+                        });
+                        _(".card").innerHTML = obj.Conference + " " + obj.Month + " " + obj.Year;
+
+
+                    } else {
+                        alert('failed');
+                    }
+                }
+            }
+            httpRequest.open('GET', 'conference.json');
+            httpRequest.send();
+        }
+    </script>
+    <style>
+    </style>
+</head>
+    <body onload="pageStartup()">
+        <header>
+            <h1>CS 261 - Work</h1>
+        </header>
+        <div class="card">
+
+        </div>
+    </body>
+</html>

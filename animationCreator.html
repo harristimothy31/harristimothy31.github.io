@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CS 261 - Work</title>
+    <link href="main.css" rel="stylesheet">
+    <script src="main.js"></script>
+    <script>
+
+        function setAnim(which){
+            var ss = document.styleSheets[1];
+            var value = document.getElementById("new-" + which).value;
+            ss.insertRule(".animated { animation-" + which + ": " + value, 0);
+            document.getElementById("new-" + which).value = "";
+            document.getElementById("curr-" + which).innerHTML = value;
+        }
+        function applyAnimation() {
+            document.getElementById("block").classList.add(".animated");
+        }
+    </script>
+    <style>
+        .block {
+            border: 1px solid;
+            display: block;
+            width: 50px;
+            height: 50px;
+            background-color: aqua;
+        }
+        .card * {
+            margin: 5px;
+        }
+
+        @keyframes animation {
+            from { background-color: green}
+            to { background-color: red }
+        }
+    </style>
+</head>
+    <body>
+        <header>
+            <h1>CS 261 - Work</h1>
+        </header>
+
+        <div class="card">
+            <p><input type="text" id="new-duration" placeholder="duration" onchange="setAnim('duration');"/>Current: <span id="curr-duration">None</span></p><br/>
+            <p><input type="text" id="new-delay" placeholder="delay" onchange="setAnim('delay');"/>Current: <span id="curr-delay">None</span></p><br/>
+            <p>
+                <select id="new-direction" onchange="setAnim('direction');" >
+                    <option value=""></option>
+                    <option value="normal">normal</option>
+                    <option value="reverse">reverse</option>
+                    <option value="alternate">alternate</option>
+                    <option value="alternate-reverse">alternate-reverse</option>
+                </select>
+                Current: <span id="curr-direction">None</span>
+            </p><br/>
+            <p><input type="text" id="new-fill" placeholder="fill-mode" onchange="setAnim('fill-mode');"/>Current: <span id="curr-fill-mode">None</span></p><br/>
+            <p><input type="text" id="new-iteration-count" placeholder="iteration-count" onchange="setAnim('iteration-count');"/>Current: <span id="curr-iteration-count">None</span></p><br/>
+            <p><input type="text" id="new-play-state" placeholder="play-state" onchange="setAnim('play-state');"/>Current: <span id="curr-play-state">None</span></p><br/>
+            <p><input type="text" id="new-timing-function" placeholder="timing-function" onchange="setAnim('timing-function');"/>Current: <span id="curr-timing-function">None</span></p><br/>
+            <button onclick="applyAnimation()">Play Animation</button>
+            <br/>
+            <br/>
+            <div class="block" id="block"></div>
+        </div>
+    </body>
+</html>

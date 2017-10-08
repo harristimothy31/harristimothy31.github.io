@@ -1,0 +1,274 @@
+{
+  "General Conference Years" : {
+    "Year" : "2017",
+    "Conference" : "Annual",
+    "Month": "April",
+    "Sessions" : [
+      {
+        "Session": "General Women's",
+        "Date":"",
+        "Speakers": [
+          {
+            "Speaker": "Bonnie H. Cordon",
+            "Calling": "Second Counselor in the Primary General Presidency",
+            "Talk Title": "Trust in the Lord and Lean Not",
+            "Speaker#": "1"
+          },
+          {
+            "Speaker": "Carol F. McConkie",
+            "Calling": "First Counselor in the Young Women General Presidency",
+            "Talk Title": "The Beauty of Holiness",
+            "Speaker#": "2"
+          },
+          {
+            "Speaker": "Linda K. Burton",
+            "Calling": "Relief Society General President",
+            "Talk Title": "Certain Women",
+            "Speaker#": "3"
+          },
+          {
+            "Speaker": "Henry B. Eyring",
+            "Calling": "First Counselor in the First Presidency",
+            "Talk Title": "\"My Peace I Leave with You\"",
+            "Speaker#": "4"
+          }
+        ]
+      },
+      {
+        "Session": "Saturday Morning",
+        "Speakers": [
+          {
+            "Speaker": "Henry B. Eyring",
+            "Calling": "First Counselor in the First Presidency",
+            "Talk Title": "Gathering the Family of God",
+            "Speaker#": "1"
+          },
+          {
+            "Speaker": "M. Joseph Brough",
+            "Calling": "Second Counselor in the Young Men General Presidency",
+            "Talk Title": "His Daily Guiding Hand",
+            "Speaker#": "2"
+          },
+          {
+            "Speaker": "Weatherford T. Clayton",
+            "Calling": "Of the Seventy",
+            "Talk Title": "Our Father's Glorious Plan",
+            "Speaker#": "3"
+          },
+          {
+            "Speaker": "Dale G. Renlund",
+            "Calling": "Of the Quorum of the Twelve Apostles",
+            "Talk Title": "Our Good Shepherd",
+            "Speaker#": "4"
+          },
+          {
+            "Speaker": "Ulisses Soares",
+            "Calling": "Of the Presidency of the Seventy",
+            "Talk Title": "Confide in God Unwaveringly",
+            "Speaker#": "5"
+          },
+          {
+            "Speaker": "Mark A. Bragg",
+            "Calling": "Of the Seventy",
+            "Talk Title": "Brighter and Brighter until the Perfect Day",
+            "Speaker#": "6"
+          },
+          {
+            "Speaker": "Russell M. Nelson",
+            "Calling": "President of the Quorum of the Twelve Apostles",
+            "Talk Title": "Drawing the Power of Jesus Christ into Our Lives",
+            "Speaker#": "7"
+          }
+        ]
+      },
+      {
+        "Session": "Saturday Afternoon",
+        "Speakers": [
+          {
+            "Speaker": "Dieter F. Uchtdorf",
+            "Calling": "Second Counselor in the First Presidency",
+            "Talk Title": "The Sustaining of Church Officers",
+            "Speaker#": "1"
+          },
+          {
+            "Speaker": "Kevin R. Jergensen",
+            "Calling": "Managing Director, Church Auditing Department",
+            "Talk Title": "Church Auditing Department Report, 2016",
+            "Speaker#": "2"
+          },
+          {
+            "Speaker": "Brook P. Hales",
+            "Calling": "Secretary to the First Presidency",
+            "Talk Title": "Statistical Report, 2016",
+            "Speaker#": "3"
+          },
+          {
+            "Speaker": "Robert D. Hales",
+            "Calling": "Of the Quorum of the Twelve Apostles",
+            "Talk Title": "Becoming a Disciple of Our Lord Jesus Christ",
+            "Speaker#": "4"
+          },
+          {
+            "Speaker": "Jeffrey R. Holland",
+            "Calling": "Of the Quorum of the Twelve Apostles",
+            "Talk Title": "Songs Sung and Unsung",
+            "Speaker#": "5"
+          },
+          {
+            "Speaker": "Gary B. Sabin",
+            "Calling": "Of the Seventy",
+            "Talk Title": "Stand Up Inside and Be All In",
+            "Speaker#": "6"
+          },
+          {
+            "Speaker": "Valeri V. Cordón",
+            "Calling": "Of the Seventy",
+            "Talk Title": "The Language of the Gospel",
+            "Speaker#": "7"
+          },
+          {
+            "Speaker": "Neil L. Andersen",
+            "Calling": "Of the Quorum of the Twelve Apostles",
+            "Talk Title": "Overcoming the World",
+            "Speaker#": "8"
+          },
+          {
+            "Speaker": "M. Russell Ballard",
+            "Calling": "Of the Quorum of the Twelve Apostles",
+            "Talk Title": "Return and Receive",
+            "Speaker#": "9"
+          }
+        ]
+      },
+      {
+        "Session": "General Priesthood",
+        "Speakers": [
+          {
+            "Speaker": "Thomas S. Monson",
+            "Calling": "President of The Church of Jesus Christ of Latter-Day Saints",
+            "Talk Title": "Kindness, Charity, and Love",
+            "Speaker#": "1"
+          },
+          {
+            "Speaker": "David A. Bednar",
+            "Calling": "Of the Quorum of the Twelve Apostles",
+            "Talk Title": "Called to the Work",
+            "Speaker#": "2"
+          },
+          {
+            "Speaker": "Gérald Caussé",
+            "Calling": "Presiding Bishop",
+            "Talk Title": "Prepare the Way",
+            "Speaker#": "3"
+          },
+          {
+            "Speaker": "Dieter F. Uchtdorf",
+            "Calling": "Second Counselor in the First Presidency",
+            "Talk Title": "The Greatest among You",
+            "Speaker#": "4"
+          },
+          {
+            "Speaker": "Henry B. Eyring",
+            "Calling": "First Counselor in the First Presidency",
+            "Talk Title": "\"Walk with Me\"",
+            "Speaker#": "5"
+          }
+        ]
+      },
+      {
+        "Session": "Sunday Morning",
+        "Speakers": [
+          {
+            "Speaker": "Thomas S. Monson",
+            "Calling": "President of The Church of Jesus Christ of Latter-Day Saints",
+            "Talk Title": "The Power of the Book of Mormon",
+            "Speaker#": "1"
+          },
+          {
+            "Speaker": "Joy D. Jones",
+            "Calling": "Primary General President",
+            "Talk Title": "A Sin-Resistant Generation",
+            "Speaker#": "2"
+          },
+          {
+            "Speaker": "Yoon Hwan Choi",
+            "Calling": "Of the Seventy",
+            "Talk Title": "Don’t Look Around, Look Up!",
+            "Speaker#": "3"
+          },
+          {
+            "Speaker": "Ronald A. Rasband",
+            "Calling": "Of the Quorum of the Twelve Apostles",
+            "Talk Title": "Let the Holy Spirit Guide",
+            "Speaker#": "4"
+          },
+          {
+            "Speaker": "L. Whitney Clayton",
+            "Calling": "Of the Presidency of the Seventy",
+            "Talk Title": "Whatsoever He Saith unto You, Do It",
+            "Speaker#": "5"
+          },
+          {
+            "Speaker": "Dallin H. Oaks",
+            "Calling": "Of the Quorum of the Twelve Apostles",
+            "Talk Title": "The Godhead and the Plan of Salvation",
+            "Speaker#": "6"
+          },
+          {
+            "Speaker": "Dieter F. Uchtdorf",
+            "Calling": "Second Counselor in the First Presidency",
+            "Talk Title": "Perfect Love Casteth Out Fear",
+            "Speaker#": "7"
+          }
+        ]
+      },
+      {
+        "Session": "Sunday Afternoon",
+        "Speakers": [
+          {
+            "Speaker": "D. Todd Christofferson",
+            "Calling": "Of the Quorum of the Twelve Apostles",
+            "Talk Title": "The Voice of Warning",
+            "Speaker#": "1"
+          },
+          {
+            "Speaker": "Joaquin E. Costa",
+            "Calling": "Of the Seventy",
+            "Talk Title": "To the Friends and Investigators of the Church",
+            "Speaker#": "2"
+          },
+          {
+            "Speaker": "S. Mark Palmer",
+            "Calling": "Of the Seventy",
+            "Talk Title": "Then Jesus Beholding Him Loved Him",
+            "Speaker#": "3"
+          },
+          {
+            "Speaker": "Gary E. Stevenson",
+            "Calling": "Of the Quorum of the Twelve Apostles",
+            "Talk Title": "How Does the Holy Ghost Help You?",
+            "Speaker#": "4"
+          },
+          {
+            "Speaker": "C. Scott Grow",
+            "Calling": "Of the Seventy",
+            "Talk Title": "And This Is Life Eternal",
+            "Speaker#": "5"
+          },
+          {
+            "Speaker": "Benjamín De Hoyos",
+            "Calling": "Of the Seventy",
+            "Talk Title": "That Our Light May Be a Standard for the Nations",
+            "Speaker#": "6"
+          },
+          {
+            "Speaker": "Quentin L. Cook",
+            "Calling": "Of the Quorum of the Twelve Apostles",
+            "Talk Title": "Foundations of Faith",
+            "Speaker#": "7"
+          }
+        ]
+      }
+    ]
+  }
+}
