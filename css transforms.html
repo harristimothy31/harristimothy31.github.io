@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS3 Transforms</title>
+    <link href="main.css" rel="stylesheet">
+    <script src="main.js"></script>
+    <script>
+        function pageStartup() {
+
+        }
+    </script>
+    <style>
+        div.red, div.green, div.blue {
+            border: 1px solid;
+            display: block;
+            width: 50px;
+            height: 20px;
+        }
+        div.red {
+            background-color: red;
+            transform: scale(2, 2);
+        }
+        div.green {
+            background-color: green;
+            transform: skew(15deg, 5deg) translateX(2in);
+        }
+        div.blue {
+            background-color: blue;
+            transform: rotate(0.25turn);
+        }
+    </style>
+</head>
+<body onload="pageStartup()">
+    <header class="header">
+        <h1>CS 261 - Work</h1>
+    </header>
+    <div style="display:inline-block; width:60%;" class="card">
+        <div class="red">
+        </div>
+        <br/>
+        <div class="green">
+        </div>
+        <br/>
+        <div class="blue">
+        </div>
+    </div>
+</body>
+</html>
