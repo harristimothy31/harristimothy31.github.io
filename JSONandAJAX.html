@@ -4,22 +4,53 @@
     <title>CIT 261 - Work</title>
     <link href="main.css" rel="stylesheet">
     <script>
-        _ = (selector) => { return document.querySelector(selector); }
+        var SubSpace = function(selector) {
+            this.selector = selector || null;
+            this.element = null;
+        }
+
+        SubSpace.prototype.init = function() {
+            if(this.selector[0] === '<') {
+                var matches = this.selector.match(/<(\w*)>/);
+                if (matches === null || matches === undefined) {
+                    console.log('Invalid selector');
+                    return false;
+                }
+                var elem = matches[0].replace('<', '').replace('>', '');
+                this.element = document.createElement(elem);
+            } else {
+                this.element = document.querySelectorAll(this.selector);
+            }
+        }
+
+        _ = function(selector) {
+            var elmnt = new SubSpace(selector);
+            elmnt.init();
+            return elmnt;
+        }
 
         function pageStartup() {
+            loadStorage();
+            getConference();
+        }
+        function loadStorage() {
+            if (localStorage["conference"]) {
+                setSessionDropdown(JSON.parse(localStorage.getItem("conference"))["General Conference Years"]);
+            } else {
+                getConference();
+            }
+        }
+        function getConference() {
+            debugger
             var httpRequest = new XMLHttpRequest();
             httpRequest.onreadystatechange = function() {
                 if (httpRequest.readyState === XMLHttpRequest.DONE) {
                     if (httpRequest.status === 200) {
                         var json = JSON.parse(httpRequest.responseText);
-                        var obj = json["General Conference Years"];
 
-                        Object.keys(obj).forEach(function(key) {
-                            console.log(key, obj[key]);
-                        });
-                        _(".card").innerHTML = obj.Conference + " " + obj.Month + " " + obj.Year;
+                        localStorage.setItem("conference", JSON.stringify(json));
 
-
+                        setSessionDropdown(json["General Conference Years"]);
                     } else {
                         alert('failed');
                     }
@@ -28,8 +59,114 @@
             httpRequest.open('GET', 'conference.json');
             httpRequest.send();
         }
+
+        function setSessionDropdown(obj) {
+            _("#session").element[0].innerHTML = '';
+            _("#session").element[0].appendChild(_("<option>").element);
+            _("#conference").element[0].innerHTML = obj.Year + " " + obj.Month + " " + obj.Conference + " General Conference";
+            obj.Sessions.forEach(function(key, index) {
+                var option = _("<option>").element;
+                option.value = index;
+                option.innerHTML = key.Session;
+                _("#session").element[0].appendChild(option);
+            });
+        }
+        function getSpeakers() {
+            _("#speakers").element[0].innerHTML = "";
+            _("#speakers").element[0].appendChild(_("<option>").element);
+            var sessions = _('#session').element[0];
+            var session = sessions.options[sessions.selectedIndex].value;
+
+            var conf = JSON.parse(localStorage.getItem("conference"));
+            if (session !== "") {
+                var speakers = conf["General Conference Years"].Sessions[session].Speakers;
+
+                speakers.forEach((speaker, index)=> {
+                    var option = _("<option>").element;
+                    option.value = index;
+                    option.innerHTML = speaker.Speaker;
+
+                    _("#speakers").element[0].appendChild(option);
+
+                    _("#speakerSelect").element[0].classList.remove("fadeOut");
+                    _("#speakerSelect").element[0].classList.add("fadeIn");
+
+                });
+            } else {
+                _("#speakerSelect").element[0].classList.remove("fadeIn");
+                _("#speakerSelect").element[0].classList.add("fadeOut");
+                _("#speakerDetail").element[0].classList.add("fadeOut");
+            }
+        }
+
+        function getSpeakerInfo() {
+            _("#name").element[0].innerHTML = "";
+            _("#calling").element[0].innerHTML = "";
+            _("#talk").element[0].innerHTML = "";
+            _("#notes").element[0].value = "";
+            _("#audio").element[0].src = '';
+            _("#link").element[0].href = '';
+            _("#link").element[0].innerHTML = '';
+
+            var speakers = _('#speakers').element[0];
+            var speaker = speakers.options[speakers.selectedIndex].value;
+            var sessions = _('#session').element[0];
+            var session = sessions.options[sessions.selectedIndex].value;
+            if (speaker !== "") {
+                var conf = JSON.parse(localStorage.getItem("conference"));
+                var spkr = conf["General Conference Years"].Sessions[session].Speakers[speaker];
+                _("#name").element[0].innerHTML = spkr.Speaker;
+                _("#calling").element[0].innerHTML = spkr.Calling;
+                _("#talk").element[0].innerHTML = spkr["Talk Title"];
+                if (spkr.notes !== undefined) {
+                    _("#notes").element[0].value = spkr.notes;
+                }
+                _("#audio").element[0].src = spkr.audio;
+                _("#link").element[0].href = spkr["url"];
+                _("#link").element[0].innerHTML = 'Go To lds.org';
+
+                _("#speakerDetail").element[0].classList.remove("fadeOut");
+                _("#speakerDetail").element[0].classList.add("fadeIn");
+            } else {
+                _("#speakerDetail").element[0].classList.add("fadeOut");
+            }
+        }
+
+        function saveNotes() {
+            var sessions = _('#session').element[0];
+            var session = sessions.options[sessions.selectedIndex].value;
+            var speakers = _('#speakers').element[0];
+            var speaker = speakers.options[speakers.selectedIndex].value;
+
+            var conf = JSON.parse(localStorage.getItem("conference"));
+            conf["General Conference Years"].Sessions[session].Speakers[speaker].notes = _("#notes").element[0].value;
+            localStorage.setItem('conference', JSON.stringify(conf));
+        }
     </script>
     <style>
+        .fadeIn * {
+            animation: fadeInSlide forwards ease-in 1s;
+        }
+
+        .fadeOut * {
+            animation: fadeOutSlide forwards ease-in 1s;
+        }
+
+        @keyframes fadeInSlide
+        {
+            0% { opacity:0; width: 50%; height: 0; transform: translateX(-200px);}
+            50% { opacity: 0; height: 0; transform: translateX(-100px); }
+            75% { opacity: .5; transform: translateX(-50px);}
+            100% { opacity:1; }
+        }
+
+        @keyframes fadeOutSlide
+        {
+            0% { opacity:1; }
+            50% { opacity: .5; transform: translateX(-50px);}
+            75% { opacity: 0; height: 0; transform: translateX(-100px); }
+            100% { opacity:0; width: 50%; height: 0; transform: translateX(-200px);}
+        }
     </style>
 </head>
     <body onload="pageStartup()">
@@ -37,7 +174,38 @@
             <h1>CS 261 - Work</h1>
         </header>
         <div class="card">
-
+            <form>
+                <h3 id="conference"></h3>
+                <p><label for="session"><strong>Choose a Session</strong></label>
+                <select name="session" id="session" onchange="getSpeakers();">
+                    <option value=""></option>
+                </select>
+                </p>
+                <div id="speakerSelect">
+                    <p><label for="speakers"><strong>Choose a Speaker</strong></label>
+                    <select name="speakers" id="speakers" onchange="getSpeakerInfo()">
+                        <option value=""></option>
+                    </select>
+                    </p>
+                </div>
+                <div id="speakerDetail">
+                    <p><strong>Name: </strong><span id="name"></span></p>
+                    <p><strong>Calling: </strong><span id="calling"></span></p>
+                    <p><strong>Talk: </strong><span id="talk"></span></p>
+                    <div>
+                        <label for="notes"><strong>Notes: </strong></label>
+                        <br />
+                        <textarea style="width: 100%; height: 10rem;" id="notes" onblur="saveNotes()"></textarea>
+                    </div>
+                    <p>
+                        <strong>Listen: &nbsp;&nbsp;</strong>
+                        <audio class="fadeIn" id="audio" src="" controls>
+                        </audio>
+                    </p>
+                    <br />
+                    <a id="link" href=""></a>
+                </div>
+            </form>
         </div>
     </body>
 </html>
