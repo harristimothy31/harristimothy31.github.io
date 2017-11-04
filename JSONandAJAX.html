@@ -30,8 +30,9 @@
         }
 
         function pageStartup() {
+            _("#speakerSelect").element[0].classList.add("fadeOut");
+            _("#speakerDetail").element[0].classList.add("fadeOut");
             loadStorage();
-            getConference();
         }
         function loadStorage() {
             if (localStorage["conference"]) {
@@ -41,7 +42,6 @@
             }
         }
         function getConference() {
-            debugger
             var httpRequest = new XMLHttpRequest();
             httpRequest.onreadystatechange = function() {
                 if (httpRequest.readyState === XMLHttpRequest.DONE) {
@@ -90,6 +90,15 @@
 
                     _("#speakerSelect").element[0].classList.remove("fadeOut");
                     _("#speakerSelect").element[0].classList.add("fadeIn");
+                    _("#name").element[0].innerHTML = "";
+                    _("#calling").element[0].innerHTML = "";
+                    _("#talk").element[0].innerHTML = "";
+                    _("#notes").element[0].value = "";
+                    _("#audio").element[0].src = '';
+                    _("#link").element[0].href = '';
+                    _("#link").element[0].innerHTML = '';
+
+                    _("#speakerDetail").element[0].classList.add("fadeOut");
 
                 });
             } else {
