@@ -81,7 +81,7 @@
             if (session !== "") {
                 var speakers = conf["General Conference Years"].Sessions[session].Speakers;
 
-                speakers.forEach((speaker, index)=> {
+                speakers.forEach((speaker, index) => {
                     var option = _("<option>").element;
                     option.value = index;
                     option.innerHTML = speaker.Speaker;
