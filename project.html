@@ -5,13 +5,103 @@
     <title>CIT 261</title>
     <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
     <script>
+        var SubSpace = function(selector) {
+            this.selector = selector || null;
+            this.element = null;
+        }
+
+        SubSpace.prototype.init = function() {
+            if(this.selector[0] === '<') {
+                var matches = this.selector.match(/<(\w*)>/);
+                if (matches === null || matches === undefined) {
+                    console.log('Invalid selector');
+                    return false;
+                }
+                var elem = matches[0].replace('<', '').replace('>', '');
+                this.element = document.createElement(elem);
+            } else {
+                this.element = document.querySelectorAll(this.selector);
+            }
+        }
+
+        SubSpace.prototype.html = function(html) {
+            if (html === "html") {
+                return this.element[0].innerHTML;
+            } else {
+                this.element[0].innerHTML = html;
+                return this;
+            }
+        }
+
+        _ = function(selector) {
+            var elmnt = new SubSpace(selector);
+            elmnt.init();
+            return elmnt;
+        }
+
+        class Card {
+            constructor(number) {
+                this.number = number;
+                var div = _("<div>").element;
+                div.classList.add("card");
+                div.classList.add("card-" + this.number);
+                div.innerHTML = '<figure class="card-front"><p class="card-front-text"></p></figure>'
+                    + '<figure class="card-back"><p class="card-back-text"></p></figure>';
+                this.ele = div;
+            }
+            setCardBackText(text) {
+                this.ele.lastChild.firstChild.innerHTML = text;
+            }
+            setCardFrontText(text) {
+                this.ele.firstChild.firstChild.innerHTML = text;
+            }
+        }
+
+        class CardSet {
+            constructor(name) {
+                this.name = name;
+                this.cards = [];
+            }
+            display() {
+
+            }
+        }
+
+        var currentSet;
+
         function onLoad() {
-            document.querySelectorAll(".card")[0].addEventListener("touchend", function() {
+            _(".card.current").element[0].addEventListener("touchend", function() {
                flipCard();
             });
         }
         function flipCard() {
-            document.querySelectorAll(".card")[0].classList.toggle("flipped");
+            _(".card.current").element[0].classList.toggle("flipped");
+        }
+
+        function fade(direction) {
+            _('.card.currenth').element[0].classList.add('fade-' + direction);
+        }
+
+        function newSet(setName) {
+            //if there is a current set save it
+
+            //empty currentSet
+            currentSet = new CardSet(setName);
+        }
+
+        function saveSet() {
+
+        }
+
+        function loadSet(setName) {
+            //save currentSet
+            if (localStorage["cardSets"]) {
+                currentSet = JSON.parse(localStorage.getItem("cardSets"))[setName];
+            }
+        }
+
+        function addCard() {
+            currentSet.cards.push(new Card(currentSet.cards.length));
         }
     </script>
     <style>
@@ -29,9 +119,11 @@
             position: fixed;
             box-sizing : border-box;
         }
+
         header .nav-title {
             margin: 3rem;
         }
+
         @media only screen and (orientation: portrait) {
             header .nav-title {
                 font-size: 2.5rem;
@@ -43,9 +135,51 @@
 
             }
         }
+        label {
+            font-size: 1.5rem;
+        }
+        input {
+            width: 100%;
+            height: 50px;
+            margin: 5px;
+            font-size: 2rem;
+            padding-left: 5px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-image: none;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+        .btn-reg {
+            color: #333;
+            background-color: #fff;
+            border-color: #ccc;
+        }
         .menu {
 
         }
+
+        .card.current  {
+            z-index: 20;
+        }
+
         .card-deck {
             background-color: white;
             height: 450px;
@@ -53,13 +187,6 @@
             perspective: 800px;
             position: relative;
             margin: 60% auto 50px;
-            box-shadow: 1px 1px 1px white,
-                        2px 2px 1px white,
-                        3px 3px 1px white,
-                        4px 4px 1px white,
-                        5px 5px 1px white,
-                        6px 6px 1px white,
-                        7px 7px 1px white;
         }
         .list {
 
@@ -70,6 +197,7 @@
         .count {
 
         }
+
         .card {
             width: 100%;
             height: 100%;
@@ -78,6 +206,9 @@
             transition: transform .5s;
             transform-origin: right center;
 
+        }
+        .card.card-2{
+            transform: translate(0.5rem, 0.5rem);
         }
         .card figure {
             border: 1px solid lightgray;
@@ -105,11 +236,11 @@
         .card.flipped {
             transform: translateX(-100%) translateZ(-25px) rotateY( -180deg ) rotate( -5deg ) translateY(-20px);
         }
-        .fade-right { /* Transition for */
-
+        .fade-right { /* Transition for swiping a card to the right */
+            animation: fade-right forwards ease-in .5s;
         }
         .fade-left {
-
+            animation: fadeInSlide forwards ease-in 1s;
         }
         .slide-in{
 
@@ -117,19 +248,35 @@
         .slide-out {
 
         }
+
+        @keyframes fade-right {
+            50% { z-index: -5; transform: translateX(-100%)  translateY(-5px);}
+            100% {  z-index: -5; }
+        }
     </style>
 </head>
 <body onload="onLoad()">
     <header><p class="nav-title">Flash Cards</p></header>
     <aside class="menu"></aside>
+
     <div class="card-deck">
-        <div class="card" draggable="true">
-            <figure class="card-front"><p>User Input Here</p></figure>
-            <figure class="card-back"><p>Other User Input</p></figure>
+
+
+    </div>
+    <div class="list">Set 1</div>
+    <div class="input">
+        <label>Card Front Text
+            <input type=text name="cardFrontText"/>
+        </label>
+        <label>Card Back Text
+            <input type=text name="cardBackText"/>
+        </label>
+    </div>
+    <div class="count">
+        <div>
+            <button class='btn btn-reg' onclick="fade('right')">Fade Right</button>
+            <button onclick="fade('left')">Fade Left</button>
         </div>
     </div>
-    <div class="list"></div>
-    <div class="input"></div>
-    <div class="count"></div>
 </body>
 </html>

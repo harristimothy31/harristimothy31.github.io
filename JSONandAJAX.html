@@ -23,6 +23,15 @@
             }
         }
 
+        SubSpace.prototype.html = function(html) {
+            if (html === "html") {
+                return this.element[0].innerHTML;
+            } else {
+                this.element[0].innerHTML = html;
+                return this;
+            }
+        }
+
         _ = function(selector) {
             var elmnt = new SubSpace(selector);
             elmnt.init();
@@ -61,9 +70,9 @@
         }
 
         function setSessionDropdown(obj) {
-            _("#session").element[0].innerHTML = '';
+            _("#session").html('');
             _("#session").element[0].appendChild(_("<option>").element);
-            _("#conference").element[0].innerHTML = obj.Year + " " + obj.Month + " " + obj.Conference + " General Conference";
+            _("#conference").html(obj.Year + " " + obj.Month + " " + obj.Conference + " General Conference");
             obj.Sessions.forEach(function(key, index) {
                 var option = _("<option>").element;
                 option.value = index;
@@ -72,7 +81,7 @@
             });
         }
         function getSpeakers() {
-            _("#speakers").element[0].innerHTML = "";
+            _("#speakers").html('');
             _("#speakers").element[0].appendChild(_("<option>").element);
             var sessions = _('#session').element[0];
             var session = sessions.options[sessions.selectedIndex].value;
@@ -90,13 +99,13 @@
 
                     _("#speakerSelect").element[0].classList.remove("fadeOut");
                     _("#speakerSelect").element[0].classList.add("fadeIn");
-                    _("#name").element[0].innerHTML = "";
-                    _("#calling").element[0].innerHTML = "";
-                    _("#talk").element[0].innerHTML = "";
+                    _("#name").html("");
+                    _("#calling").html("");
+                    _("#talk").html('');
                     _("#notes").element[0].value = "";
                     _("#audio").element[0].src = '';
                     _("#link").element[0].href = '';
-                    _("#link").element[0].innerHTML = '';
+                    _("#link").html('');
 
                     _("#speakerDetail").element[0].classList.add("fadeOut");
 
@@ -109,9 +118,9 @@
         }
 
         function getSpeakerInfo() {
-            _("#name").element[0].innerHTML = "";
-            _("#calling").element[0].innerHTML = "";
-            _("#talk").element[0].innerHTML = "";
+            _("#name").html('');
+            _("#calling").html('');
+            _("#talk").html('');
             _("#notes").element[0].value = "";
             _("#audio").element[0].src = '';
             _("#link").element[0].href = '';
