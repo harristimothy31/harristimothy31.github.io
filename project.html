@@ -103,6 +103,18 @@
         function addCard() {
             currentSet.cards.push(new Card(currentSet.cards.length));
         }
+
+        function flipNewCard() {
+            _(".new-card").element[0].classList.toggle("flipped");
+        }
+
+        function newCard() {
+            _(".new-card").element[0].classList.toggle("slide-in");
+        }
+
+        function saveCard() {
+            _(".new-card").element[0].classList.toggle("slide-out");
+        }
     </script>
     <style>
         body {
@@ -138,31 +150,25 @@
         label {
             font-size: 1.5rem;
         }
-        input {
-            width: 100%;
-            height: 50px;
+        textarea {
+            width: 90%;
+            height: 340px;
             margin: 5px;
             font-size: 2rem;
             padding-left: 5px;
         }
 
         .btn {
+            height: 70px;
             display: inline-block;
             padding: 6px 12px;
             margin-bottom: 0;
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 1.42857143;
+            font-size: 1.5rem;
             text-align: center;
             white-space: nowrap;
             vertical-align: middle;
-            -ms-touch-action: manipulation;
             touch-action: manipulation;
             cursor: pointer;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
             background-image: none;
             border: 1px solid transparent;
             border-radius: 4px;
@@ -207,9 +213,7 @@
             transform-origin: right center;
 
         }
-        .card.card-2{
-            transform: translate(0.5rem, 0.5rem);
-        }
+
         .card figure {
             border: 1px solid lightgray;
             border-radius: 5px;
@@ -222,7 +226,7 @@
         }
         .card figure p {
             text-align: center;
-            margin: 25% 0 0 0;
+            margin: 0;
             font-family: 'Indie Flower', cursive;
             font-size: 3rem;
         }
@@ -243,10 +247,14 @@
             animation: fadeInSlide forwards ease-in 1s;
         }
         .slide-in{
-
+            animation: slide-out backwards ease-out 1s;
         }
         .slide-out {
+            animation: slide-out normal forwards ease-out 1s;
+        }
 
+        @keyframes slide-out {
+            100% { transform: translateY(-500%); opacity: 0}
         }
 
         @keyframes fade-right {
@@ -260,22 +268,34 @@
     <aside class="menu"></aside>
 
     <div class="card-deck">
-
-
+        <div class="card new-card">
+            <figure class="card-front">
+                <p class="card-front-text">
+                    <label>Card Front
+                        <textarea name="cardFrontText"></textarea>
+                    </label>
+                </p>
+            </figure>
+            <figure class="card-back">
+                <p class="card-back-text">
+                    <label>Card Back
+                        <textarea name="cardBackText"></textarea>
+                    </label>
+                </p>
+            </figure>
+        </div>
     </div>
     <div class="list">Set 1</div>
     <div class="input">
-        <label>Card Front Text
-            <input type=text name="cardFrontText"/>
-        </label>
-        <label>Card Back Text
-            <input type=text name="cardBackText"/>
-        </label>
     </div>
     <div class="count">
         <div>
-            <button class='btn btn-reg' onclick="fade('right')">Fade Right</button>
-            <button onclick="fade('left')">Fade Left</button>
+            <button class='btn btn-reg' onclick="fade('right')">< Next Card</button>
+            <button class='btn btn-reg' onclick="newCard()">New Card</button>
+            <button class='btn btn-reg' onclick="flipNewCard()">Flip</button>
+            <button class='btn btn-reg' onclick="saveCard()">Save</button>
+            <button class='btn btn-reg' onclick="editCard()">Edit</button>
+            <button class='btn btn-reg' onclick="fade('left')">Previous Card ></button>
         </div>
     </div>
 </body>
