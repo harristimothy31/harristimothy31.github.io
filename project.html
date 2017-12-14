@@ -42,7 +42,9 @@
         class Card {
             constructor(number) {
                 this.number = number;
+                this.id = currentSet.name + "-card-" + number;
                 var div = _("<div>").element;
+                div.id = this.id;
                 div.classList.add("card");
                 div.classList.add("card-" + this.number);
                 div.innerHTML = '<figure class="card-front"><p class="card-front-text"></p></figure>'
@@ -55,6 +57,15 @@
             setCardFrontText(text) {
                 this.ele.firstChild.firstChild.innerHTML = text;
             }
+            putOnScreen() {
+                _(".card-deck").element[0].appendChild(this.ele);
+            }
+            setCurrent() {
+                this.ele.classList.add("current");
+                this.ele.addEventListener("touchend", function () {
+                    flipCard();
+                })
+            }
         }
 
         class CardSet {
@@ -62,24 +73,32 @@
                 this.name = name;
                 this.cards = [];
             }
-            display() {
-
+            getNewCurrent() {
+                var oldCurrent = this.cards.pop();
+                this.cards.unshift(oldCurrent);
+                var newCurrent = this.cards.pop();
+                this.cards.push(newCurrent);
+                return newCurrent.id;
             }
         }
 
         var currentSet;
 
         function onLoad() {
-            _(".card.current").element[0].addEventListener("touchend", function() {
-               flipCard();
-            });
+            currentSet = new CardSet('currentSet');
         }
         function flipCard() {
             _(".card.current").element[0].classList.toggle("flipped");
         }
 
         function fade(direction) {
-            _('.card.currenth').element[0].classList.add('fade-' + direction);
+            var oldCurrent = _('.card.current').element[0].id;
+            _('#' + oldCurrent).element[0].classList.remove("current");
+            _('#' + oldCurrent).element[0].classList.add('toBack' + direction);
+            _('#' + oldCurrent).element[0].addEventListener('animationend', function () {
+                this.classList.remove('toBack' + direction);
+            })
+            _('#' + currentSet.getNewCurrent()).element[0].classList.add("current");
         }
 
         function newSet(setName) {
@@ -100,8 +119,16 @@
             }
         }
 
-        function addCard() {
+        function addCard(frontTxt, backTxt) {
+            if (currentSet.cards.length > 0) {
+                _(".current").element[0].classList.remove("current");
+            }
             currentSet.cards.push(new Card(currentSet.cards.length));
+            var card = currentSet.cards[currentSet.cards.length - 1];
+            card.setCardFrontText(frontTxt);
+            card.setCardBackText(backTxt);
+            card.setCurrent();
+            card.putOnScreen();
         }
 
         function flipNewCard() {
@@ -109,17 +136,34 @@
         }
 
         function newCard() {
-            _(".new-card").element[0].classList.toggle("slide-in");
+            _(".new-card").element[0].classList.toggle("slide-out");
+            _("#btnNew").element[0].classList.toggle("hidden");
+            _("#btnSave").element[0].classList.toggle("hidden");
+            _("#btnFlipNew").element[0].classList.toggle("hidden");
         }
 
         function saveCard() {
+            _("#btnNew").element[0].classList.toggle("hidden");
+            _("#btnFlipNew").element[0].classList.toggle("hidden");
+            _("#btnSave").element[0].classList.toggle("hidden");
+            var frontTxt = _("#cardFrontText").element[0].value;
+            _("#cardFrontText").element[0].value = "";
+            var backTxt = _("#cardBackText").element[0].value;
+            _("#cardBackText").element[0].value = "";
+
+            if (_(".new-card").element[0].classList.contains("flipped")) {
+                _(".new-card").element[0].classList.toggle("flipped");
+            }
             _(".new-card").element[0].classList.toggle("slide-out");
+
+            addCard(frontTxt, backTxt);
         }
     </script>
     <style>
         body {
             margin: 0;
             background-color: #eee;
+            overflow: hidden;
         }
         header {
             top: 0;
@@ -160,7 +204,7 @@
 
         .btn {
             height: 70px;
-            display: inline-block;
+            display: inline-flex;
             padding: 6px 12px;
             margin-bottom: 0;
             font-size: 1.5rem;
@@ -182,12 +226,18 @@
 
         }
 
+        .new-card  {
+            z-index: 200;
+            transform-style: preserve-3d;
+            transition: transform .5s;
+        }
+
         .card.current  {
             z-index: 20;
         }
 
         .card-deck {
-            background-color: white;
+            background-color: #eee;
             height: 450px;
             width: 800px;
             perspective: 800px;
@@ -204,19 +254,23 @@
 
         }
 
+        .hidden {
+            display: none;
+        }
+
         .card {
             width: 100%;
             height: 100%;
             position: absolute;
             transform-style: preserve-3d;
-            transition: transform .5s;
+            transition: transform .5s, opacity 1s;
             transform-origin: right center;
-
         }
 
         .card figure {
             border: 1px solid lightgray;
             border-radius: 5px;
+            padding: 15px;
             margin: 0;
             display: block;
             position: absolute;
@@ -225,7 +279,6 @@
             backface-visibility: hidden;
         }
         .card figure p {
-            text-align: center;
             margin: 0;
             font-family: 'Indie Flower', cursive;
             font-size: 3rem;
@@ -240,26 +293,30 @@
         .card.flipped {
             transform: translateX(-100%) translateZ(-25px) rotateY( -180deg ) rotate( -5deg ) translateY(-20px);
         }
-        .fade-right { /* Transition for swiping a card to the right */
-            animation: fade-right forwards ease-in .5s;
-        }
-        .fade-left {
-            animation: fadeInSlide forwards ease-in 1s;
-        }
-        .slide-in{
-            animation: slide-out backwards ease-out 1s;
-        }
         .slide-out {
-            animation: slide-out normal forwards ease-out 1s;
+            opacity: 0;
+            transform: translateY(-300%) translateZ(-25px) rotateY( -180deg ) rotate( -5deg ) translateY(-20px);
         }
 
-        @keyframes slide-out {
-            100% { transform: translateY(-500%); opacity: 0}
-        }
+        .toBackRight {animation:glide2 1.3s forwards linear;}
+        .toBackLeft {animation:glide 1.3s forwards linear;}
+        @keyframes glide {
+            0% {transform: translate(0px, 0px) scale(1);z-index:400;}
+            50% {transform: translate(-1200px, -35px); scale(1.5) z-index: -400;box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.5);}
+            100% {
+                transform: translate(0) scale(1);
 
-        @keyframes fade-right {
-            50% { z-index: -5; transform: translateX(-100%)  translateY(-5px);}
-            100% {  z-index: -5; }
+                z-index:1;
+            }
+        }
+        @keyframes glide2 {
+            0% {transform: translate(0px, 0px) scale(1);z-index:400;}
+            50% {transform: translate(1200px, -35px); scale(1.5) z-index: -400;box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.5);}
+            100% {
+                transform: translate(0) scale(1);
+
+                z-index:1;
+            }
         }
     </style>
 </head>
@@ -268,35 +325,33 @@
     <aside class="menu"></aside>
 
     <div class="card-deck">
-        <div class="card new-card">
+        <div class="card new-card slide-out">
             <figure class="card-front">
-                <p class="card-front-text">
+                <p class="card-front-text" style="text-align: center;">
                     <label>Card Front
-                        <textarea name="cardFrontText"></textarea>
+                        <textarea id="cardFrontText" name="cardFrontText"></textarea>
                     </label>
                 </p>
             </figure>
             <figure class="card-back">
-                <p class="card-back-text">
+                <p class="card-back-text" style="text-align: center;">
                     <label>Card Back
-                        <textarea name="cardBackText"></textarea>
+                        <textarea id="cardBackText" name="cardBackText"></textarea>
                     </label>
                 </p>
             </figure>
         </div>
     </div>
-    <div class="list">Set 1</div>
-    <div class="input">
-    </div>
-    <div class="count">
+    <div class="list"></div>
+    <div class="buttons" style="display: flex; justify-content: space-between">
+        <button class='btn btn-reg' id="btnNext" onclick="fade('Left')" style="align-self: flex-start">< Next Card</button>
         <div>
-            <button class='btn btn-reg' onclick="fade('right')">< Next Card</button>
-            <button class='btn btn-reg' onclick="newCard()">New Card</button>
-            <button class='btn btn-reg' onclick="flipNewCard()">Flip</button>
-            <button class='btn btn-reg' onclick="saveCard()">Save</button>
-            <button class='btn btn-reg' onclick="editCard()">Edit</button>
-            <button class='btn btn-reg' onclick="fade('left')">Previous Card ></button>
+            <button class='btn btn-reg' id="btnNew" onclick="newCard()" style="align-self: center">New</button>
+            <button class='btn btn-reg hidden' id="btnFlipNew" onclick="flipNewCard()" style="align-self: center">Flip</button>
+            <button class='btn btn-reg hidden' id="btnSave" onclick="saveCard()" style="align-self: center">Save</button>
+            <button class='btn btn-reg hidden' id="btnEdit" onclick="editCard()" style="align-self: center">Edit</button>
         </div>
+        <button class='btn btn-reg' id="btnPrev" onclick="fade('Right')" style="align-self:flex-end">Next Card ></button>
     </div>
 </body>
 </html>
